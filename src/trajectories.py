@@ -22,7 +22,7 @@ def get_graphs_per_snapshot(G: nx.Graph, df: pd.DataFrame, cluster_method: str) 
         # Simplify snapshot graph
         G_snapshot.remove_edges_from(nx.selfloop_edges(G_snapshot))
         G_snapshot.remove_nodes_from(list(nx.isolates(G_snapshot)))
-   
+
         for node in G_snapshot.nodes:
             if node in G.nodes and cluster_method in G.nodes[node]:
                 G_snapshot.nodes[node][cluster_method] = G.nodes[node][cluster_method]
@@ -77,5 +77,5 @@ def get_trajectories(node_to_community: Dict[str, int], G: nx.Graph, df: pd.Data
     # print(np.max(trajectory_lengths))
     # print(np.min(trajectory_lengths))
 
-    return trajectories
+    return trajectories, graphs_per_snapshot
 

@@ -1,5 +1,13 @@
 experiment_name: "twitter_louvain"
+type: "baseline"
 data_path: "data/processed/twitter/snapshots/twitter_snapshots.parquet"
 graph_path: "data/processed/twitter/graphs/twitter_graph.gexf"
-
+features:
+  load_save: true
+  X_path: "features/twitter/node/sequences_h.pt"
+  t_path: "features/twitter/node/labels_h.pt"
+  
 clustering: "louvain"
+hyperparams:
+  lr: 1e-3
+  hidden_dim: 16
