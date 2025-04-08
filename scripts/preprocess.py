@@ -1,8 +1,6 @@
 import pandas as pd
 from pathlib import Path
 import networkx as nx
-import community.community_louvain as community_louvain
-from typing import Dict
 
 RAW_DATA_PATH = Path("data/raw/twitter/interactions_march_23-24_2025.csv")
 PROCESSED_DATA_PATH = Path("data/processed/interactions_cleaned.parquet")
@@ -34,9 +32,6 @@ def get_network_graph(df: pd.DataFrame) -> nx.Graph:
 
     return G
 
-def louvain(G: nx.Graph) -> Dict:
-    return community_louvain.best_partition(G)
-
 def get_snapshot_df(df: pd.DataFrame) -> pd.DataFrame:
     df['datetime'] = pd.to_datetime(df['created_at'])
     df['snapshot'] = df['datetime'].dt.to_period("h")
@@ -53,12 +48,6 @@ def main():
     df = load_df(RAW_DATA_PATH)
     G = get_network_graph(df)
     print(f"Graph created with {G.number_of_nodes()} nodes and {G.number_of_edges()} edges.")
-
-    # Perform clustering
-    node_to_community = louvain(G)
-
-    # Add community labels to graph
-    nx.set_node_attributes(G, node_to_community, name='louvain')
 
     # Get temporal snapshots
     df = get_snapshot_df(df)
