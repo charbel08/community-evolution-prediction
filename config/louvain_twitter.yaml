@@ -1,5 +1,6 @@
 experiment_name: "twitter_louvain"
 type: "baseline"
+num_runs: 5
 data_path: "data/processed/twitter/snapshots/twitter_snapshots.parquet"
 graph_path: "data/processed/twitter/graphs/twitter_graph.gexf"
 features:
@@ -11,3 +12,5 @@ clustering: "louvain"
 hyperparams:
   lr: 1e-3
   hidden_dim: 16
+
+# Test Accuracy: 0.6986 ± 0.0111

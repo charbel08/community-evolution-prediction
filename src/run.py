@@ -1,11 +1,13 @@
+import torch
 import pandas as pd
 import networkx as nx
-import torch
+import numpy as np
 
 from src.cluster import cluster
 from src.trajectories import get_trajectories
 from src.features import get_rnn_data_padded
 from src.train import train
+from src.plot import plot_training_summary
 
 def run_experiment(config):
 
@@ -21,6 +23,32 @@ def run_experiment(config):
     else:
         sequences, labels = get_rnn_data_padded(trajectories, graphs_per_snapshot, save=config["features"])
     
-    train(sequences, labels)
+    train_stats, test_accs = [], []
+    for run in range(1, config["num_runs"] + 1):
+        train_losses, train_accs, val_accs, test_acc = train(sequences, labels, run, config["experiment_name"])
+        test_accs.append(test_acc)
+        train_stats.append(np.stack([train_losses, train_accs, val_accs]))
+
+
+    
+    # Train stats
+    train_stats = np.stack(train_stats)
+    train_means, train_stds = np.mean(train_stats, axis=0), np.std(train_stats, axis=0)
+    plot_training_summary(train_means, train_stds, config["experiment_name"])
+
+    # train_loss_mean = train_means[0, :]
+    # train_acc_mean = train_means[1, :]
+    # val_acc_mean = train_means[2, :]
+
+    # train_loss_std = train_stds[0, :]
+    # train_acc_std = train_stds[1, :]
+    # val_acc_std = train_stds[2, :]
+
+    # Test stats
+    test_accs = np.array(test_accs)
+    test_mean = np.mean(test_accs)
+    test_std = np.std(test_accs)
+    print(f"Test Accuracy: {test_mean:.4f} ± {test_std:.4f}")
+    
 
     
