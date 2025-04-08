@@ -29,20 +29,10 @@ def run_experiment(config):
         test_accs.append(test_acc)
         train_stats.append(np.stack([train_losses, train_accs, val_accs]))
 
-
-    
     # Train stats
     train_stats = np.stack(train_stats)
     train_means, train_stds = np.mean(train_stats, axis=0), np.std(train_stats, axis=0)
     plot_training_summary(train_means, train_stds, config["experiment_name"])
-
-    # train_loss_mean = train_means[0, :]
-    # train_acc_mean = train_means[1, :]
-    # val_acc_mean = train_means[2, :]
-
-    # train_loss_std = train_stds[0, :]
-    # train_acc_std = train_stds[1, :]
-    # val_acc_std = train_stds[2, :]
 
     # Test stats
     test_accs = np.array(test_accs)
