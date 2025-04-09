@@ -1,4 +1,5 @@
 experiment_name: "twitter_louvain"
+dataset: "twitter"
 type: "baseline"
 num_runs: 5
 data_path: "data/processed/twitter/snapshots/twitter_snapshots.parquet"
@@ -13,4 +14,4 @@ hyperparams:
   lr: 1e-3
   hidden_dim: 16
 
-# Test Accuracy: 0.6986 ± 0.0111
+# Test Accuracy: 0.7014 ± 0.0255

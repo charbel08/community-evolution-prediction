@@ -1,7 +1,7 @@
 import argparse
 import yaml
 
-from src.run import run_experiment
+from src.run import run_experiments
 
 def main():
 
@@ -12,7 +12,7 @@ def main():
     with open(args.config, "r") as f:
         config = yaml.safe_load(f)
     
-    run_experiment(config)
+    run_experiments(config)
 
 if __name__ == "__main__":
     main()

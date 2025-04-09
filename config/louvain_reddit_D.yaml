@@ -1,0 +1,17 @@
+experiment_name: "louvain_reddit_D"
+dataset: "reddit"
+type: "baseline"
+num_runs: 5
+data_path: "data/processed/reddit/snapshots/reddit_snapshots_D.parquet"
+graph_path: "data/processed/reddit/graphs/reddit_graph_D.gexf"
+features:
+  load_save: true
+  X_path: "features/reddit/node/sequences_D.pt"
+  t_path: "features/reddit/node/labels_D.pt"
+  
+clustering: "louvain"
+hyperparams:
+  lr: 1e-3
+  hidden_dim: 16
+
+# Test Accuracy: 0.8172 ± 0.0049

@@ -6,16 +6,22 @@ from typing import Dict
 from collections import defaultdict
 
 
-def get_graphs_per_snapshot(G: nx.Graph, df: pd.DataFrame, cluster_method: str) -> Dict:
+def get_graphs_per_snapshot(G: nx.Graph, df: pd.DataFrame, cluster_method: str, dataset: str) -> Dict:
 
     graphs_by_snapshot = {}
     for snapshot, group in df.groupby('snapshot_id'):
-        group = group[['from_user_id', 'to_user_id']]
+
+        if dataset == "twitter":
+            source, destination = 'from_user_id', 'to_user_id'
+        elif dataset == "reddit":
+            source, destination = 'SOURCE_SUBREDDIT', 'TARGET_SUBREDDIT'
+        
+        group = group[[source, destination]]
 
         G_snapshot = nx.from_pandas_edgelist(
             group,
-            source='from_user_id',
-            target='to_user_id',
+            source=source,
+            target=destination,
             create_using=nx.Graph()
         )
 
@@ -58,9 +64,9 @@ def get_community_graphs_per_snapshot(node_to_community, graphs_by_snapshot):
     return community_graphs_by_snapshot
 
 
-def get_trajectories(node_to_community: Dict[str, int], G: nx.Graph, df: pd.DataFrame, cluster_method: str):
+def get_trajectories(node_to_community: Dict[str, int], G: nx.Graph, df: pd.DataFrame, cluster_method: str, dataset: str):
 
-    graphs_per_snapshot = get_graphs_per_snapshot(G, df, cluster_method)
+    graphs_per_snapshot = get_graphs_per_snapshot(G, df, cluster_method, dataset)
     community_graphs_per_snapshot = get_community_graphs_per_snapshot(node_to_community, graphs_per_snapshot)
 
     trajectories = defaultdict(list)
