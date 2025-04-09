@@ -8,10 +8,11 @@ features:
   load_save: true
   X_path: "features/twitter/node/sequences_h.pt"
   t_path: "features/twitter/node/labels_h.pt"
-  
+  minmax_scaler: false
 clustering: "louvain"
 hyperparams:
-  lr: 1e-3
+  lr: 0.001
   hidden_dim: 16
 
 # Test Accuracy: 0.7014 ± 0.0255
+# 0.7129 ± 0.0176 w/ minmax

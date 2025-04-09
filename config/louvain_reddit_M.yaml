@@ -8,10 +8,12 @@ features:
   load_save: true
   X_path: "features/reddit/node/sequences_M.pt"
   t_path: "features/reddit/node/labels_M.pt"
-  
+  minmax_scaler: false
 clustering: "louvain"
 hyperparams:
-  lr: 1e-3
+  lr: 0.001
   hidden_dim: 16
 
 # Test Accuracy: 0.5639 ± 0.0536
+# Test Accuracy: 0.6193 ± 0.0320 w/ minmax
+# Test Accuracy: 0.6843 ± 0.0299 # With normalization

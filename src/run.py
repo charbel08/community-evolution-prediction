@@ -8,6 +8,7 @@ from src.trajectories import get_trajectories
 from src.features import get_rnn_data_padded
 from src.train import train
 from src.plot import plot_training_summary
+from src.utils import set_seed
 
 def run_experiments(config):
 
@@ -17,6 +18,7 @@ def run_experiments(config):
     
     train_stats, test_accs = [], []
     for run in range(1, config["num_runs"] + 1):
+        # set_seed(run)
         if run >= 2:
             config["features"]["load_save"] = True
         node_to_community = cluster(G, method=config["clustering"])
@@ -27,7 +29,7 @@ def run_experiments(config):
         else:
             sequences, labels = get_rnn_data_padded(trajectories, graphs_per_snapshot, save=config["features"])
             
-        train_losses, train_accs, val_accs, test_acc = train(sequences, labels, run, config["experiment_name"])
+        train_losses, train_accs, val_accs, test_acc = train(sequences, labels, run, config)
         test_accs.append(test_acc)
         train_stats.append(np.stack([train_losses, train_accs, val_accs]))
 
