@@ -290,17 +290,17 @@ if __name__ == "__main__":
 
 
 
-    # # Get graph embedding
-    # #sample model name that doesn't need user info agreeement
-    # # model_name = "openlm-research/open_llama_7b"
-    # embedding = get_graph_embedding_from_llama(G)
-    # print("Graph Embedding Shape:", embedding.shape)
-    # print("Graph Embedding: ", embedding)
+    # Get graph embedding
+    #sample model name that doesn't need user info agreeement
+    # model_name = "openlm-research/open_llama_7b"
+    embedding = get_graph_embedding_from_llama(G)
+    print("Graph Embedding Shape:", embedding.shape)
+    print("Graph Embedding: ", embedding)
 
-    # # Now for our actual graph
-    # # Get graph embedding
-    # # Save the embedding to a file
-    # torch.save(embedding, "graph_embedding_" + graph_name + "_" + cluster_key + ".pt")
+    # Now for our actual graph
+    # Get graph embedding
+    # Save the embedding to a file
+    torch.save(embedding, "graph_embedding_" + graph_name + "_" + cluster_key + ".pt")
 
 
 
